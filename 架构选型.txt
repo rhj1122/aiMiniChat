@@ -1,0 +1,27 @@
+一、平台
+Node（平台）v24.14.X 
+pnpm（包管理器）v10.33
+
+二、编辑器
+Antigravity、Claude Code（CLI）
+
+三、仓库组织方式
+gitlab
+
+四、本地开发环境与打包
+Vite（打包、Sentry） v8.0.X
+Husky（提交前通过钩子，校验ESLint、提交规范）v9.1.X
+ESLint（代码检查，形成一套代码规范配置）v10.1.X
+Prettier（代码格式化）v3.8.X
+Vitest（测试框架）v4.1.X
+React Testing Library（组件测试框架） v16.3.X
+
+五、语言：
+TypeScript（语言） v6.0
+
+六、应用框架及配套工具
+React（UI框架） v19.2.X
+React Router（路由） v7.13.X
+Zustand（状态管理） v5.0.X
+Tailwind （原子化 CSS 框架）v4.2.X
+Radix UI（无样式基础组件）
