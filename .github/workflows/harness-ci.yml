@@ -1,0 +1,121 @@
+# GitHub Actions CI 配置
+# 触发：MR（PR）和 push 到主要分支时
+
+name: Harness CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+      - 'release-**'
+  push:
+    branches:
+      - main
+      - master
+      - 'dev-**'
+      - 'fix-**'
+      - 'release-**'
+
+jobs:
+  # ─────────────────────────────────────────
+  # 阶段一：快速检查（格式 + 类型）
+  # ─────────────────────────────────────────
+  quick-check:
+    name: 快速检查（格式 + 类型）
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 格式检查（Prettier）
+        run: pnpm format:check
+
+      - name: TypeScript 类型检查
+        run: pnpm type-check
+
+  # ─────────────────────────────────────────
+  # 阶段二：架构约束检查（ESLint）
+  # ─────────────────────────────────────────
+  arch-check:
+    name: 架构约束检查（ESLint）
+    needs: quick-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: ESLint 检查（含自定义 Harness 规则）
+        run: pnpm lint
+
+  # ─────────────────────────────────────────
+  # 阶段三：测试
+  # ─────────────────────────────────────────
+  test:
+    name: 测试（Vitest）
+    needs: arch-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 运行测试
+        run: pnpm test:run
+
+  # ─────────────────────────────────────────
+  # 阶段四：构建验证
+  # ─────────────────────────────────────────
+  build:
+    name: 构建验证
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: 安装依赖
+        run: pnpm install --frozen-lockfile
+
+      - name: 构建
+        run: pnpm build

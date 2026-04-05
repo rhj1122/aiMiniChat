@@ -1,0 +1,76 @@
+# GitLab CI 配置
+# 触发：MR 和 push 到主要分支时
+
+stages:
+  - quick-check
+  - arch-check
+  - test
+  - build
+
+# 公共配置（所有 job 复用）
+.base:
+  image: node:24
+  before_script:
+    - corepack enable
+    - corepack prepare pnpm@10 --activate
+    - pnpm install --frozen-lockfile
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+    paths:
+      - node_modules/
+
+# 触发条件
+workflow:
+  rules:
+    # MR 触发
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    # push 触发（指定分支）
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "main"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == "master"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^dev-/
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^fix-/
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH =~ /^release-/
+
+# ─────────────────────────────────────────
+# 阶段一：快速检查（格式 + 类型）
+# ─────────────────────────────────────────
+quick-check:
+  extends: .base
+  stage: quick-check
+  script:
+    - pnpm format:check
+    - pnpm type-check
+
+# ─────────────────────────────────────────
+# 阶段二：架构约束检查（ESLint）
+# ─────────────────────────────────────────
+arch-check:
+  extends: .base
+  stage: arch-check
+  script:
+    - pnpm lint
+
+# ─────────────────────────────────────────
+# 阶段三：测试
+# ─────────────────────────────────────────
+test:
+  extends: .base
+  stage: test
+  script:
+    - pnpm test:run
+
+# ─────────────────────────────────────────
+# 阶段四：构建验证
+# ─────────────────────────────────────────
+build:
+  extends: .base
+  stage: build
+  script:
+    - pnpm build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 3 days
+    when: on_success
