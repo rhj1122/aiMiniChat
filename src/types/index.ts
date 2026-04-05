@@ -41,3 +41,13 @@ export interface User {
   name: string
   avatar?: string
 }
+
+// ─── 常量 ──────────────────────────────────────────────────────
+// 业务常量放在 Types 层，任何层都可以依赖
+
+export const DEFAULT_AI_CONFIG: AIConfig = {
+  model: 'gpt-4o-mini',
+  temperature: 0.7,
+}
+
+export const MESSAGE_MAX_LENGTH = 4000

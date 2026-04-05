@@ -6,10 +6,10 @@ import reactHooksPlugin from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 
 // ─────────────────────────────────────────────────────────────
-// 自定义 Harness 架构规则（10.3 节填充）
-// import noApiInComponents from './eslint-rules/no-api-in-components.js'
-// import noStoreInPages from './eslint-rules/no-store-in-pages.js'
-// import noAiSdkInComponents from './eslint-rules/no-ai-sdk-in-components.js'
+// 自定义 Harness 架构规则
+import noNetworkInComponents from './eslint-rules/no-network-in-components.js'
+import noStoreInPages from './eslint-rules/no-store-in-pages.js'
+import noStoreInUtils from './eslint-rules/no-store-in-utils.js'
 // ─────────────────────────────────────────────────────────────
 
 export default [
@@ -66,23 +66,23 @@ export default [
   },
 
   // ─────────────────────────────────────────────────────────────
-  // Harness 自定义架构规则（10.3 节解注释并填充）
-  // {
-  //   files: ['src/**/*.{ts,tsx}'],
-  //   plugins: {
-  //     harness: {
-  //       rules: {
-  //         'no-api-in-components': noApiInComponents,
-  //         'no-store-in-pages': noStoreInPages,
-  //         'no-ai-sdk-in-components': noAiSdkInComponents,
-  //       },
-  //     },
-  //   },
-  //   rules: {
-  //     'harness/no-api-in-components': 'error',
-  //     'harness/no-store-in-pages': 'error',
-  //     'harness/no-ai-sdk-in-components': 'error',
-  //   },
-  // },
+  // Harness 自定义架构规则
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    plugins: {
+      harness: {
+        rules: {
+          'no-network-in-components': noNetworkInComponents,
+          'no-store-in-pages': noStoreInPages,
+          'no-store-in-utils': noStoreInUtils,
+        },
+      },
+    },
+    rules: {
+      'harness/no-network-in-components': 'error',
+      'harness/no-store-in-pages': 'error',
+      'harness/no-store-in-utils': 'error',
+    },
+  },
   // ─────────────────────────────────────────────────────────────
 ]
