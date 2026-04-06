@@ -8,7 +8,6 @@ import globals from 'globals'
 // ─────────────────────────────────────────────────────────────
 // 自定义 Harness 架构规则
 import noNetworkInComponents from './eslint-rules/no-network-in-components.js'
-import noStoreInPages from './eslint-rules/no-store-in-pages.js'
 import noStoreInUtils from './eslint-rules/no-store-in-utils.js'
 // ─────────────────────────────────────────────────────────────
 
@@ -92,14 +91,12 @@ export default [
       harness: {
         rules: {
           'no-network-in-components': noNetworkInComponents,
-          'no-store-in-pages': noStoreInPages,
           'no-store-in-utils': noStoreInUtils,
         },
       },
     },
     rules: {
       'harness/no-network-in-components': 'error',
-      'harness/no-store-in-pages': 'error',
       'harness/no-store-in-utils': 'error',
     },
   },

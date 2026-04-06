@@ -24,8 +24,8 @@ Types → Config → API → Store → Hooks → Components → Pages
 | API | `src/api/` | 封装所有网络请求（HTTP、WebSocket）| 只能依赖 Types、Config |
 | Store | `src/store/` | Zustand 全局状态管理 | 只能依赖 Types、API |
 | Hooks | `src/hooks/` | 业务逻辑，连接 Store 和 API | 只能依赖 Store、API、Types |
-| Components | `src/components/` | 可复用 UI 组件 | 只能依赖 Hooks、Types |
-| Pages | `src/pages/` | 页面，路由入口 | 只能依赖 Components、Hooks |
+| Components | `src/components/` | 可复用 UI 组件 | 可读取 Store，可依赖 Hooks、Types。禁止写入 Store、禁止直接发网络请求 |
+| Pages | `src/pages/` | 页面，路由入口 | 可读取 Store，可依赖 Components、Hooks。禁止写入 Store、禁止直接发网络请求 |
 
 **注意：** Types 是最底层，所有层都可以依赖它，这是正常的向下依赖。
 
@@ -42,8 +42,8 @@ Types → Config → API → Store → Hooks → Components → Pages
 ❌ Components 层直接发起网络请求（fetch、WebSocket、axios、request）
    → 必须在 src/hooks/ 中封装逻辑，Components 通过 Hooks 访问数据
 
-❌ Pages 层直接操作 Store
-   → 必须通过 Hooks 层
+❌ Pages/Components 层直接写入 Store（调用 setState、set 等写入方法）
+   → 写入操作必须封装在 Hooks 层，Pages/Components 可以读取 Store
 
 ❌ Hooks 层返回 JSX 元素
    → Hooks 只返回数据和方法
@@ -75,15 +75,21 @@ function ChatMessage() {
 ```
 
 ```typescript
-// ❌ 错误：Page 层直接操作 Store
+// ❌ 错误：Page 层直接写入 Store
 function ChatPage() {
-  const addMessage = useChatStore(s => s.addMessage)  // 违规！
+  const addMessage = useChatStore(s => s.addMessage)  // 违规！写入操作
   addMessage(...)
 }
 
-// ✅ 正确：通过 Hook 操作
+// ✅ 正确：Page 层读取 Store
 function ChatPage() {
-  const { sendMessage } = useAIChat()  // Hook 内部操作 Store
+  const config = useConfigStore(s => s.config)  // 允许，只是读取
+  console.log(config)
+}
+
+// ✅ 正确：写入操作通过 Hook
+function ChatPage() {
+  const { sendMessage } = useAiChat()  // Hook 内部封装写入操作
 }
 ```
 

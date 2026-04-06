@@ -5,8 +5,13 @@
 | 文件 | 规则名 | 说明 | 级别 |
 |------|--------|------|------|
 | `no-network-in-components.js` | `harness/no-network-in-components` | Components/Pages 层不能直接发起网络请求（fetch、WebSocket、axios、request）| error |
-| `no-store-in-pages.js` | `harness/no-store-in-pages` | Pages 层不能直接 import Store 层 | error |
 | `no-store-in-utils.js` | `harness/no-store-in-utils` | utils/ 层不能 import Store 层或 Hooks 层 | error |
+
+## 已移除的规则
+
+| 文件 | 原因 |
+|------|------|
+| `no-store-in-pages.js` | 规则过于严格，Pages/Components 需要读取 Store。写入操作靠 code review 约束 |
 
 ## 新增规则的步骤
 
