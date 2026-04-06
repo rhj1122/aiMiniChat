@@ -65,6 +65,25 @@ export default [
     },
   },
 
+  // 测试文件：注入 Vitest 全局变量（vi、describe、test、expect 等）
+  {
+    files: ['src/**/*.test.{ts,tsx}', 'src/**/*.spec.{ts,tsx}', 'src/test/**/*.ts'],
+    languageOptions: {
+      globals: {
+        vi: 'readonly',
+        describe: 'readonly',
+        it: 'readonly',
+        test: 'readonly',
+        expect: 'readonly',
+        beforeEach: 'readonly',
+        afterEach: 'readonly',
+        beforeAll: 'readonly',
+        afterAll: 'readonly',
+        process: 'readonly',
+      },
+    },
+  },
+
   // ─────────────────────────────────────────────────────────────
   // Harness 自定义架构规则
   {

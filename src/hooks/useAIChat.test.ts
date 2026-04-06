@@ -31,7 +31,8 @@ describe('useAIChat', () => {
   test('sendMessage 应该添加用户消息和 AI 占位消息', async () => {
     // Mock streamMessage 返回空的流（不产生任何 chunk）
     vi.mocked(streamMessage).mockImplementation(async function* () {
-      // 什么都不 yield，模拟空响应
+      // 模拟空响应，yield 空字符串
+      yield ''
     })
 
     const { result } = renderHook(() => useAIChat())
@@ -76,6 +77,7 @@ describe('useAIChat', () => {
 
   test('streamMessage 失败时应该显示错误消息', async () => {
     vi.mocked(streamMessage).mockImplementation(async function* () {
+      yield '' // 需要至少一个 yield 才能满足 require-yield 规则
       throw new Error('连接失败')
     })
 
