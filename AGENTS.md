@@ -27,6 +27,7 @@
 
 ## 编码规范（关键条目）
 - 组件文件名用 PascalCase，Hook 文件用 camelCase（以 use 开头）
+- 缩写词（AI、ID、URL 等）在命名中视为普通单词，只首字母大写：Ai、Id、Url（不是 AI、ID、URL）
 完整规范：docs/conventions.md
 
 ## 常用命令
