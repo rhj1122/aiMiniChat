@@ -130,7 +130,7 @@ ChatPage 重新渲染
 
 ```
 src/
-├── types/          ← 类型定义 + 业务常量（Message、User、DEFAULT_AI_CONFIG 等）
+├── types/          ← 类型定义 + 业务常量（Message、User、QA_STATUS 等）
 ├── utils/          ← 纯工具函数（request.js、formatDate 等，不能依赖 Store/Hooks）
 ├── config/         ← 环境变量（aiBaseUrl 等）
 ├── api/

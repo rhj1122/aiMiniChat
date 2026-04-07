@@ -6,7 +6,7 @@ import { useChatStore } from '@/store/chatStore'
 
 describe('useAiChat', () => {
   beforeEach(() => {
-    useChatStore.setState({ messages: [], isLoading: false })
+    useChatStore.setState({ messages: [] })
   })
 
   test('初始状态应该没有消息', () => {
@@ -15,12 +15,35 @@ describe('useAiChat', () => {
   })
 
   test('clearMessages 应该清空所有消息', () => {
-    // 先手动添加一条消息
+    // 先手动添加一条消息（使用新的 Message 结构）
     useChatStore.getState().addMessage({
-      id: '1',
-      role: 'user',
-      content: '你好',
-      timestamp: Date.now(),
+      qaId: 'qa-1',
+      question: {
+        messageId: 'q-1',
+        createTime: Date.now(),
+        sessionId: 'session-1',
+        moduleType: 'main',
+        content: '你好',
+        attachments: [],
+        requestIdList: ['req-1'],
+        ext: {},
+      },
+      answers: [
+        {
+          messageId: 'a-1',
+          createTime: Date.now(),
+          sessionId: 'session-1',
+          moduleType: 'main',
+          content: '',
+          contentAssets: [],
+          status: 3,
+          likeStatus: 0,
+          requestId: 'req-1',
+          ext: {},
+        },
+      ],
+      answerActiveIndex: 0,
+      fromHistory: false,
     })
 
     const { result } = renderHook(() => useAiChat())

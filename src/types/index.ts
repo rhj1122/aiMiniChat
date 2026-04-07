@@ -4,19 +4,65 @@
 
 // ─── 消息相关 ───────────────────────────────────────────────
 
-export type MessageRole = 'user' | 'agent'
+export interface Question {
+  messageId: string
+  createTime: number
+  sessionId: string
+  moduleType: string
+  content: string
+  attachments: unknown[]
+  requestIdList: string[]
+  ext: Record<string, unknown>
+}
+
+export interface Answer {
+  messageId: string
+  createTime: number
+  sessionId: string
+  moduleType: string
+  content: string
+  contentAssets: unknown[]
+  status: number
+  likeStatus: number
+  requestId: string
+  ext: Record<string, unknown>
+}
 
 export interface Message {
-  id: string
-  role: MessageRole
-  content: string
-  timestamp: number
-  isStreaming?: boolean
+  qaId: string
+  question: Question
+  answers: Answer[]
+  answerActiveIndex: number
+  fromHistory: boolean
 }
+
+// ─── 通用工具类型 ─────────────────────────────────────────────
+
+export type AnyRecord = Record<string, unknown>
+
+// ─── 常量 ──────────────────────────────────────────────────────
+// 业务常量放在 Types 层，任何层都可以依赖
+
+export const QA_STATUS = {
+  analyzing: 3,
+  thinking: 4,
+  replying: 5,
+  finished: 6,
+}
+
+
+
+// 以上为正确业务代码，有效
+// 以下为架构模板代码，无用
+
+
+
+
+
 
 // ─── AI 配置相关 ─────────────────────────────────────────────
 
-export interface AIConfig {
+export interface AiConfig {
   model: string
   temperature?: number
   maxTokens?: number
@@ -42,19 +88,4 @@ export interface User {
   avatar?: string
 }
 
-// ─── 常量 ──────────────────────────────────────────────────────
-// 业务常量放在 Types 层，任何层都可以依赖
 
-export const QA_STATUS = {
-  analyzing: 3,
-  thinking: 4,
-  replying: 5,
-  finished: 6,
-}
-
-export const DEFAULT_AI_CONFIG: AIConfig = {
-  model: 'gpt-4o-mini',
-  temperature: 0.7,
-}
-
-export const MESSAGE_MAX_LENGTH = 4000

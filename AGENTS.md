@@ -19,6 +19,7 @@
 详细架构：docs/architecture.md
 
 ## 关键规则（必须遵守）
+- 所有 type、interface、enum 定义必须放在 src/types/ 目录下，其他层禁止定义类型（Store 内部的 interface 除外）
 - Pages 和 Components 层可以读取 Store，但禁止直接写入 Store（写入操作必须封装在 Hooks 层）
 - 禁止在 Components 和 Pages 层直接发起网络请求（fetch、websocket），必须经过 src/api/ 层
 - Hook 只返回数据和方法，不返回 JSX
@@ -48,4 +49,3 @@ pnpm build        # 构建
 
 ## 文档
 docs/README.md（所有文档的入口）
-

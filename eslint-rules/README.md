@@ -6,6 +6,7 @@
 |------|--------|------|------|
 | `no-network-in-components.js` | `harness/no-network-in-components` | Components/Pages 层不能直接发起网络请求（fetch、WebSocket、axios、request）| error |
 | `no-store-in-utils.js` | `harness/no-store-in-utils` | utils/ 层不能 import Store 层或 Hooks 层 | error |
+| `no-type-outside-types.js` | `harness/no-type-outside-types` | pages/components/hooks/config/utils/api 层禁止导出 type/interface/enum 定义 | error |
 
 ## 已移除的规则
 

@@ -9,6 +9,7 @@ import globals from 'globals'
 // 自定义 Harness 架构规则
 import noNetworkInComponents from './eslint-rules/no-network-in-components.js'
 import noStoreInUtils from './eslint-rules/no-store-in-utils.js'
+import noTypeOutsideTypes from './eslint-rules/no-type-outside-types.js'
 // ─────────────────────────────────────────────────────────────
 
 export default [
@@ -92,12 +93,14 @@ export default [
         rules: {
           'no-network-in-components': noNetworkInComponents,
           'no-store-in-utils': noStoreInUtils,
+          'no-type-outside-types': noTypeOutsideTypes,
         },
       },
     },
     rules: {
       'harness/no-network-in-components': 'error',
       'harness/no-store-in-utils': 'error',
+      'harness/no-type-outside-types': 'error',
     },
   },
   // ─────────────────────────────────────────────────────────────
