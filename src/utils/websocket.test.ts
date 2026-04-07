@@ -62,7 +62,7 @@ describe('WsManager', () => {
 
   afterEach(() => {
     vi.unstubAllGlobals();
-  })
+  });
 
   // ─── 连接状态 ────────────────────────────────────────────────
 
@@ -173,16 +173,18 @@ describe('WsManager', () => {
     const ws = MockWebSocket.instances[0];
     ws.simulateOpen();
 
-    ws.simulateMessage(JSON.stringify({
-      id: 'msg-1',
-      type: 'query',
-      timestamp: '123',
-      header: { session_id: 'session-1' },
-      data: {},
-      source: { type: 'user', id: 'u1' },
-      target: { type: 'agent', id: 'a1' },
-      extend: {},
-    }));
+    ws.simulateMessage(
+      JSON.stringify({
+        id: 'msg-1',
+        type: 'query',
+        timestamp: '123',
+        header: { session_id: 'session-1' },
+        data: {},
+        source: { type: 'user', id: 'u1' },
+        target: { type: 'agent', id: 'a1' },
+        extend: {},
+      })
+    );
 
     expect(callback).not.toHaveBeenCalled();
   });
