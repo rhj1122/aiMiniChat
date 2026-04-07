@@ -5,6 +5,7 @@ import type { KeyboardEvent } from 'react';
 import { useConfigStore } from '@/store/configStore';
 import { useWsConnection } from '@/hooks/useWsConnection';
 import { useChat } from '@/hooks/useChat';
+import Chat from '@/components/Chat/Chat';
 
 export default function ChatPage() {
   const { config, isLoaded } = useConfigStore();
@@ -36,7 +37,7 @@ export default function ChatPage() {
         <h1 className="text-lg font-semibold">AI 助手</h1>
       </header>
       <main className="flex-1 overflow-y-auto p-4">
-        <p className="text-center text-gray-400">对话内容将显示在这里</p>
+        <Chat />
       </main>
       <footer className="border-t p-4">
         <div className="flex gap-2">
