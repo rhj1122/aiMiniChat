@@ -1,1 +1,3 @@
-npm test
+pnpm format
+pnpm check
+pnpm test:run

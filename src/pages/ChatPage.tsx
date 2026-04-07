@@ -3,8 +3,6 @@
 import { useEffect } from 'react';
 import { useConfigStore } from '@/store/configStore';
 
-import axios from 'axios';
-
 export default function ChatPage() {
   const { config, isLoaded } = useConfigStore();
 
