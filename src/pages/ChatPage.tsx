@@ -32,14 +32,14 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="border-b p-4">
+    <div className="flex h-screen flex-col">
+      <header className="flex-none border-b p-4">
         <h1 className="text-lg font-semibold">AI 助手</h1>
       </header>
       <main className="flex-1 overflow-y-auto p-4">
         <Chat />
       </main>
-      <footer className="border-t p-4">
+      <footer className="flex-none border-t p-4">
         <div className="flex gap-2">
           <input
             className="flex-1 rounded-lg border px-4 py-2"

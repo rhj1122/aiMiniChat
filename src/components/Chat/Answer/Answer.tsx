@@ -10,7 +10,11 @@ export default function Answer({ answer }: { answer: AnswerType }) {
         {answer.content ? (
           <p className="whitespace-pre-wrap break-words text-sm">{answer.content}</p>
         ) : (
-          <span className="inline-block h-4 w-4 animate-pulse rounded-full bg-gray-400" />
+          <span className="flex items-center gap-1 py-1">
+            <span className="h-2 w-2 rounded-full bg-gray-400 animate-[pulse_1.2s_ease-in-out_0s_infinite]" />
+            <span className="h-2 w-2 rounded-full bg-gray-400 animate-[pulse_1.2s_ease-in-out_0.4s_infinite]" />
+            <span className="h-2 w-2 rounded-full bg-gray-400 animate-[pulse_1.2s_ease-in-out_0.8s_infinite]" />
+          </span>
         )}
       </div>
     </div>

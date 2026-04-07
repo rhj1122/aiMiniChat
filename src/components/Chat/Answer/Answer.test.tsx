@@ -34,9 +34,10 @@ describe('Answer', () => {
     expect(bubble).toBeInTheDocument();
   });
 
-  test('content 为空时应该显示加载动画', () => {
+  test('content 为空时应该显示三个加载圆点', () => {
     const emptyAnswer = { ...mockAnswer, content: '' };
     const { container } = render(<Answer answer={emptyAnswer} />);
-    expect(container.querySelector('.animate-pulse')).toBeInTheDocument();
+    const dots = container.querySelectorAll('.rounded-full.bg-gray-400');
+    expect(dots).toHaveLength(3);
   });
 });
