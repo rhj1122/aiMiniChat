@@ -8,14 +8,26 @@
 分层架构：Types -> Config -> API -> Store -> Hooks -> Components -> Pages
 依赖只能向下，不能向上。
 目录结构：
-  src/types/      ← 类型定义（最底层，无依赖）
-  src/config/     ← 配置（环境变量和常量）
-  src/api/        ← 网络请求封装
-  src/store/      ← Zustand 状态管理
-  src/hooks/      ← 自定义 Hook（业务逻辑）
-  src/components/ ← UI 组件
-  src/pages/      ← 页面
-  src/providers/  ← 横切关注点（Auth 登录态、Error 错误边界）
+  src/types/           ← 类型定义（最底层，无依赖）
+  src/config/          ← 配置（环境变量）
+  src/utils/
+    request.ts         ← HTTP 请求工具（axios 封装）
+    websocket.ts       ← WebSocket 管理工具（WsManager 类）
+  src/api/
+    commonApi.ts       ← 通用 HTTP 接口
+    asGateway.ts       ← AS Gateway WebSocket 连接管理
+  src/store/
+    chatStore.ts       ← 对话消息状态
+    configStore.ts     ← 全局配置状态
+  src/hooks/
+    useAiChat.ts       ← 读取对话消息
+    useAppInit.ts      ← 应用初始化（获取全局配置）
+    useChat.ts         ← 发送消息和接收 WS 响应
+    useWsConnection.ts ← WS 连接生命周期管理
+  src/components/
+    Chat/              ← 对话 UI 组件（Chat、Question、Answer）
+  src/pages/           ← 页面
+  src/providers/       ← 横切关注点（Auth 登录态、Error 错误边界）
 详细架构：docs/architecture.md
 
 ## 关键规则（必须遵守）

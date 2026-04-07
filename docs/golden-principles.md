@@ -54,6 +54,29 @@ interface ChatStore {    // 这是 create<ChatStore>() 需要的，允许
 }
 ```
 
+### GP-A02：API 层的单例不能在模块顶层直接实例化
+
+**规则：** API 层如果需要单例对象（如 WsManager），必须使用懒加载模式（第一次调用时才初始化），不能在模块顶层直接 `new`。
+
+**为什么：** 模块顶层的 `new` 在模块加载时执行，`vi.mock` 无法拦截，导致测试中 mock 失效，所有测试用例都会失败。
+
+**反例：**
+```typescript
+// ❌ 错误：顶层直接实例化，测试无法 mock
+const wsManager = new WsManager({ url: appConfig.asWsUrl });
+
+// ✅ 正确：懒加载，第一次调用时才初始化
+let _wsManager: WsManager | null = null;
+function getManager(): WsManager {
+  if (!_wsManager) {
+    _wsManager = new WsManager({ url: appConfig.asWsUrl });
+  }
+  return _wsManager;
+}
+// 同时导出 _resetManager() 供测试重置单例
+export function _resetManager(): void { _wsManager = null; }
+```
+
 ---
 
 ## 测试类
@@ -84,4 +107,25 @@ expect(findAnswer('qa-1', 'a-2')?.status).toBe(6)
 expect(findAnswer('qa-1', 'a-1')?.status).toBe(3)
 // 其他 qa 不受影响
 expect(findAnswer('qa-2', 'a-3')?.status).toBe(3)
+```
+
+### GP-T02：测试环境缺失的浏览器 API 需要在测试文件顶部 mock
+
+**规则：** jsdom 不支持的浏览器 API（如 `scrollIntoView`、`ResizeObserver`、`IntersectionObserver` 等），必须在测试文件顶部 mock，不要等报错了再处理。
+
+**为什么：** 这类错误信息通常是 `xxx is not a function`，容易误导排查方向，提前 mock 可以避免干扰。
+
+**反例：**
+```typescript
+// ❌ 错误：不 mock，等报错
+render(<Chat />)  // TypeError: scrollIntoView is not a function
+
+// ✅ 正确：在测试文件顶部 mock
+window.HTMLElement.prototype.scrollIntoView = vi.fn();
+window.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}));
+```
 ```

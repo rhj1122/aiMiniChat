@@ -14,3 +14,7 @@
 
 ## 工具使用指南
 - [Skills 索引](skills/README.md) — 何时用哪个工具
+
+## 业务流程说明
+- [Chat 数据结构](business/chat-data-structure.md) — 上下行消息格式、Store 数据结构、字段含义、数据流
+- [WebSocket 连接管理](business/ws-connection.md) — WS 架构设计、session_id 路由机制、懒加载单例模式
