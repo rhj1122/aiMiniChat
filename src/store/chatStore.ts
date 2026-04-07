@@ -7,13 +7,13 @@ import type { Message, AnyRecord } from '@/types';
 
 // ─── Updaters ────────────────────────────────────────────────
 
-// 默认更新器：直接按字段名赋值
-function defaultUpdater(target: AnyRecord, key: string, value: unknown): AnyRecord {
+// 默认更新：直接按字段名赋值
+function defaultUpdate(target: AnyRecord, key: string, value: unknown): AnyRecord {
   return { ...target, [key]: value };
 }
 
-// ext 更新器：更新 target.ext 下的字段
-function extUpdater(target: AnyRecord, key: string, value: unknown): AnyRecord {
+// ext 更新：更新 target.ext 下的字段（key 格式为 "ext.xxx"）
+function extUpdate(target: AnyRecord, key: string, value: unknown): AnyRecord {
   const extKey = key.replace(/^ext\./, '');
   const ext = (target.ext ?? {}) as AnyRecord;
   return {
@@ -22,18 +22,30 @@ function extUpdater(target: AnyRecord, key: string, value: unknown): AnyRecord {
   };
 }
 
-// 根据 key 选择对应的 updater
-function getUpdater(key: string) {
-  if (key.startsWith('ext.')) return extUpdater;
-  return defaultUpdater;
+// 追加文本更新：对指定字段使用 += 追加
+function appendTextUpdate(target: AnyRecord, key: string, value: unknown): AnyRecord {
+  const current = (target[key] ?? '') as string;
+  return { ...target, [key]: current + String(value) };
+}
+
+// 根据 key 直接返回更新后的对象
+function getUpdatedData(target: AnyRecord, key: string, value: unknown): AnyRecord {
+  switch (key) {
+    case 'content':
+      return appendTextUpdate(target, key, value);
+    case 'setContent':
+      return defaultUpdate(target, 'content', value);
+    default:
+      if (key.startsWith('ext.')) return extUpdate(target, key, value);
+      return defaultUpdate(target, key, value);
+  }
 }
 
 // 对目标对象应用所有字段更新
 function applyFields<T extends AnyRecord>(target: T, fields: AnyRecord): T {
   let updated: AnyRecord = { ...target };
   for (const key of Object.keys(fields)) {
-    const updater = getUpdater(key);
-    updated = updater(updated, key, fields[key]);
+    updated = getUpdatedData(updated, key, fields[key]);
   }
   return updated as T;
 }

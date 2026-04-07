@@ -79,15 +79,36 @@ describe('chatStore', () => {
 
     useChatStore.getState().updateMessage('qa-1', 'a-2', { content: '已更新' });
 
-    // 目标 answer 被更新
-    expect(findAnswer('qa-1', 'a-2')?.content).toBe('已更新');
+    // 目标 answer 被更新（content 是追加，初始值是 '回答-a-2'）
+    expect(findAnswer('qa-1', 'a-2')?.content).toBe('回答-a-2已更新');
     // 同 qa 的另一个 answer 不受影响
     expect(findAnswer('qa-1', 'a-1')?.content).toBe('回答-a-1');
     // 另一个 qa 的 answer 不受影响
     expect(findAnswer('qa-2', 'a-3')?.content).toBe('回答-a-3');
   });
 
-  test('updateMessage 应该同时更新多个字段', () => {
+  // ─── updateMessage：appendTextUpdate / setContentUpdate ──
+
+  test('updateMessage content 字段应该追加文本（+=）', () => {
+    seedMessages();
+
+    useChatStore.getState().updateMessage('qa-1', 'a-1', { content: '你好' });
+    useChatStore.getState().updateMessage('qa-1', 'a-1', { content: '，我是 AI' });
+
+    expect(findAnswer('qa-1', 'a-1')?.content).toBe('回答-a-1你好，我是 AI');
+    expect(findAnswer('qa-1', 'a-2')?.content).toBe('回答-a-2');
+  });
+
+  test('updateMessage setContent 字段应该替换文本（覆盖）', () => {
+    seedMessages();
+
+    useChatStore.getState().updateMessage('qa-1', 'a-1', { setContent: '全新内容' });
+
+    expect(findAnswer('qa-1', 'a-1')?.content).toBe('全新内容');
+    expect(findAnswer('qa-1', 'a-2')?.content).toBe('回答-a-2');
+  });
+
+  test('updateMessage 应该同时更新多个字段（content 追加，status 覆盖）', () => {
     seedMessages();
 
     useChatStore.getState().updateMessage('qa-2', 'a-4', {
@@ -97,7 +118,7 @@ describe('chatStore', () => {
     });
 
     const answer = findAnswer('qa-2', 'a-4');
-    expect(answer?.content).toBe('回复完成');
+    expect(answer?.content).toBe('回答-a-4回复完成');
     expect(answer?.status).toBe(6);
     expect(answer?.likeStatus).toBe(1);
     // qa-1 的 answer 不受影响
@@ -111,8 +132,8 @@ describe('chatStore', () => {
 
     useChatStore.getState().updateMessage('qa-2', 'q-2', { content: '修改后的问题' });
 
-    // 目标 question 被更新
-    expect(findQuestion('qa-2')?.content).toBe('修改后的问题');
+    // 目标 question 被更新（content 是追加，初始值是 '问题-qa-2'）
+    expect(findQuestion('qa-2')?.content).toBe('问题-qa-2修改后的问题');
     // 另一个 qa 的 question 不受影响
     expect(findQuestion('qa-1')?.content).toBe('问题-qa-1');
   });
