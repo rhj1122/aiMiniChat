@@ -4,7 +4,7 @@
 
 // ─── 消息相关 ───────────────────────────────────────────────
 
-export type MessageRole = 'user' | 'assistant' | 'system'
+export type MessageRole = 'user' | 'agent'
 
 export interface Message {
   id: string
@@ -44,6 +44,13 @@ export interface User {
 
 // ─── 常量 ──────────────────────────────────────────────────────
 // 业务常量放在 Types 层，任何层都可以依赖
+
+export const QA_STATUS = {
+  analyzing: 3,
+  thinking: 4,
+  replying: 5,
+  finished: 6,
+}
 
 export const DEFAULT_AI_CONFIG: AIConfig = {
   model: 'gpt-4o-mini',
