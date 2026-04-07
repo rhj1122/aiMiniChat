@@ -61,3 +61,6 @@ pnpm build        # 构建
 
 ## 文档
 docs/README.md（所有文档的入口）
+重要业务文档：
+  docs/business/chat-data-structure.md ← Chat 数据结构、上下行消息格式、Store 字段说明
+  docs/business/ws-connection.md       ← WebSocket 连接架构、session_id 路由机制

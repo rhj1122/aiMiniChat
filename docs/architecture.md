@@ -115,9 +115,9 @@ function ChatPage() {
     ↓
 ChatPage（Pages 层）
     ↓ 调用
-useAIChat（Hooks 层）
+useAiChat（Hooks 层）
     ↓ 调用
-src/api/aiApi.ts（API 层）—— WebSocket 连接
+src/api/asGateway.ts（API 层）—— WebSocket 连接
     ↓ 流式返回
 useChatStore（Store 层）—— 更新消息列表
     ↓ 响应
@@ -130,16 +130,24 @@ ChatPage 重新渲染
 
 ```
 src/
-├── types/          ← 类型定义 + 业务常量（Message、User、QA_STATUS 等）
-├── utils/          ← 纯工具函数（request.js、formatDate 等，不能依赖 Store/Hooks）
-├── config/         ← 环境变量（aiBaseUrl 等）
+├── types/          ← 类型定义 + 业务常量（Message、WsMessage、QA_STATUS 等）
+├── utils/
+│   ├── request.ts  ← HTTP 请求工具（axios 封装，不能依赖 Store/Hooks）
+│   └── websocket.ts← WebSocket 管理工具（WsManager 类，不能依赖 Store/Hooks）
+├── config/         ← 环境变量（aiBaseUrl、asWsUrl 等）
 ├── api/
-│   └── aiApi.ts    ← WebSocket 连接、消息收发
+│   ├── commonApi.ts← 通用 HTTP 接口（如 getConfig）
+│   └── asGateway.ts← AS Gateway WebSocket 连接管理（懒加载单例）
 ├── store/
-│   └── chatStore.ts← 消息列表、loading 状态
+│   ├── chatStore.ts← 对话消息列表
+│   └── configStore.ts← 全局配置
 ├── hooks/
-│   └── useAIChat.ts← 发送消息、流式更新逻辑
-├── components/     ← 可复用组件（MessageBubble、ChatInput 等）
+│   ├── useAiChat.ts       ← 读取对话消息
+│   ├── useAppInit.ts      ← 应用初始化（获取全局配置）
+│   ├── useChat.ts         ← 发送消息和接收 WS 响应
+│   └── useWsConnection.ts ← WS 连接生命周期管理
+├── components/
+│   └── Chat/       ← 对话 UI 组件（Chat.tsx、Question/、Answer/）
 ├── pages/
 │   ├── LoginPage.tsx
 │   ├── HomePage.tsx

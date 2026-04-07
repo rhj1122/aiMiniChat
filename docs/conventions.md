@@ -103,6 +103,11 @@ import { Message } from '@/types'  // ESLint: consistent-type-imports
 - 测试 Store 更新方法时，预置多条数据，用业务 ID 查找断言
 - Mock API 调用，不发真实网络请求
 - `pnpm test:run` 默认屏蔽 console 输出
+- jsdom 不支持的浏览器 API（`scrollIntoView`、`ResizeObserver` 等）必须在测试文件顶部 mock：
+  ```typescript
+  window.HTMLElement.prototype.scrollIntoView = vi.fn();
+  ```
+- 模块顶层有 `new XxxClass()` 的 API 文件，测试时必须用懒加载模式（见 asGateway.test.ts）
 
 ---
 
