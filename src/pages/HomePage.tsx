@@ -1,15 +1,15 @@
 // 首页（骨架）
 // 包含：logo、推荐消息、输入框
-import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router';
 
 export default function HomePage() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSend = (content: string) => {
     if (content.trim()) {
-      navigate('/chat', { state: { initialMessage: content } })
+      navigate('/chat', { state: { initialMessage: content } });
     }
-  }
+  };
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-8">
@@ -23,5 +23,5 @@ export default function HomePage() {
         开始对话
       </button>
     </div>
-  )
+  );
 }

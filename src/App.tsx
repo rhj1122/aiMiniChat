@@ -1,12 +1,12 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router'
-import { useAppInit } from '@/hooks/useAppInit'
-import LoginPage from '@/pages/LoginPage'
-import HomePage from '@/pages/HomePage'
-import ChatPage from '@/pages/ChatPage'
-import AdminPage from '@/pages/AdminPage'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router';
+import { useAppInit } from '@/hooks/useAppInit';
+import LoginPage from '@/pages/LoginPage';
+import HomePage from '@/pages/HomePage';
+import ChatPage from '@/pages/ChatPage';
+import AdminPage from '@/pages/AdminPage';
 
 function AppRoutes() {
-  useAppInit()
+  useAppInit();
 
   return (
     <Routes>
@@ -16,7 +16,7 @@ function AppRoutes() {
       <Route path="/admin" element={<AdminPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
-  )
+  );
 }
 
 export default function App() {
@@ -24,5 +24,5 @@ export default function App() {
     <BrowserRouter>
       <AppRoutes />
     </BrowserRouter>
-  )
+  );
 }

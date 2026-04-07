@@ -1,16 +1,18 @@
 // 对话页
 // 包含：消息列表、输入框
-import { useEffect } from 'react'
-import { useConfigStore } from '@/store/configStore'
+import { useEffect } from 'react';
+import { useConfigStore } from '@/store/configStore';
+
+import axios from 'axios';  // 故意违规：Pages 层直接 import 网络库
 
 export default function ChatPage() {
-  const { config, isLoaded } = useConfigStore()
+  const { config, isLoaded } = useConfigStore();
 
   useEffect(() => {
     if (isLoaded) {
-      console.log('全局配置:', config)
+      console.log('全局配置:', config);
     }
-  }, [config, isLoaded])
+  }, [config, isLoaded]);
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -24,5 +26,5 @@ export default function ChatPage() {
         <input className="w-full rounded-lg border px-4 py-2" placeholder="输入消息..." disabled />
       </footer>
     </div>
-  )
+  );
 }

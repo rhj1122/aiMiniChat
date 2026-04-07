@@ -1,18 +1,18 @@
 // src/hooks/useAiChat.test.ts
 
-import { renderHook, act } from '@testing-library/react'
-import { useAiChat } from './useAiChat'
-import { useChatStore } from '@/store/chatStore'
+import { renderHook, act } from '@testing-library/react';
+import { useAiChat } from './useAiChat';
+import { useChatStore } from '@/store/chatStore';
 
 describe('useAiChat', () => {
   beforeEach(() => {
-    useChatStore.setState({ messages: [] })
-  })
+    useChatStore.setState({ messages: [] });
+  });
 
   test('初始状态应该没有消息', () => {
-    const { result } = renderHook(() => useAiChat())
-    expect(result.current.messages).toHaveLength(0)
-  })
+    const { result } = renderHook(() => useAiChat());
+    expect(result.current.messages).toHaveLength(0);
+  });
 
   test('clearMessages 应该清空所有消息', () => {
     // 先手动添加一条消息（使用新的 Message 结构）
@@ -44,14 +44,14 @@ describe('useAiChat', () => {
       ],
       answerActiveIndex: 0,
       fromHistory: false,
-    })
+    });
 
-    const { result } = renderHook(() => useAiChat())
-    expect(result.current.messages).toHaveLength(1)
+    const { result } = renderHook(() => useAiChat());
+    expect(result.current.messages).toHaveLength(1);
 
     act(() => {
-      result.current.clearMessages()
-    })
-    expect(result.current.messages).toHaveLength(0)
-  })
-})
+      result.current.clearMessages();
+    });
+    expect(result.current.messages).toHaveLength(0);
+  });
+});

@@ -5,4 +5,4 @@
 export const appConfig = {
   // AI 服务地址（本地 VoltAgent 开发时使用，后续替换为公司网关）
   aiBaseUrl: import.meta.env.VITE_AI_BASE_URL ?? 'http://localhost:3141',
-} as const
+} as const;
