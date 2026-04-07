@@ -16,7 +16,8 @@
     "test": "vitest",
     "test:run": "cross-env VITEST_SILENT=true vitest run",
     "test:run-with-log": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.4",

@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useConfigStore } from '@/store/configStore';
 
-import axios from 'axios';  // 故意违规：Pages 层直接 import 网络库
+import axios from 'axios';
 
 export default function ChatPage() {
   const { config, isLoaded } = useConfigStore();
