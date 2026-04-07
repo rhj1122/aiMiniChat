@@ -16,9 +16,7 @@ export default function Chat() {
   }, [messages]);
 
   if (messages.length === 0) {
-    return (
-      <p className="text-center text-gray-400">对话内容将显示在这里</p>
-    );
+    return <p className="text-center text-gray-400">对话内容将显示在这里</p>;
   }
 
   return (
