@@ -36,6 +36,53 @@ export interface Message {
   fromHistory: boolean;
 }
 
+// ─── WebSocket 消息相关 ───────────────────────────────────────
+
+export interface WsMessageHeader {
+  sn: string;
+  mt: string;
+  user_id: string;
+  app_id: string;
+  app_version: string;
+  device_id: string;
+  session_id: string;
+  request_id: string;
+  resource_id: string;
+}
+
+export interface WsMessageSource {
+  type: string;
+  id: string;
+}
+
+export interface WsMessageTarget {
+  type: string;
+  id: string;
+}
+
+export interface WsMessage {
+  id: string;
+  type: string;
+  timestamp: string;
+  header: WsMessageHeader;
+  data: Record<string, unknown>;
+  source: WsMessageSource;
+  target: WsMessageTarget;
+  extend: Record<string, unknown>;
+}
+
+export type WsMessageCallback = (message: WsMessage) => void;
+
+// ─── WebSocket 管理器类型 ─────────────────────────────────────
+
+export type WsStatus = 'disconnected' | 'connecting' | 'connected' | 'error';
+
+export interface WsManagerOptions {
+  url: string;
+  onStatusChange?: (status: WsStatus) => void;
+  onError?: (event: Event) => void;
+}
+
 // ─── 通用工具类型 ─────────────────────────────────────────────
 
 export type AnyRecord = Record<string, unknown>;
