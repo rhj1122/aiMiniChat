@@ -3,4 +3,5 @@ dist/
 coverage/
 *.local
 .DS_Store
+.omc
 .omc/
