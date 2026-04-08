@@ -13,10 +13,10 @@ export function useAppInit() {
     if (isLoaded) return;
 
     getConfig()
-      .then(res => {
+      .then((res) => {
         setConfig(res.data as Record<string, unknown>);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error('获取全局配置失败:', err);
       });
   }, [isLoaded, setConfig]);

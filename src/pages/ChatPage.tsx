@@ -45,7 +45,7 @@ export default function ChatPage() {
             className="flex-1 rounded-lg border px-4 py-2"
             placeholder="输入消息..."
             value={inputValue}
-            onChange={e => setInputValue(e.target.value)}
+            onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
           />
           <button

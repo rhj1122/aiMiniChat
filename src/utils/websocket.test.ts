@@ -183,7 +183,7 @@ describe('WsManager', () => {
         source: { type: 'user', id: 'u1' },
         target: { type: 'agent', id: 'a1' },
         extend: {},
-      })
+      }),
     );
 
     expect(callback).not.toHaveBeenCalled();

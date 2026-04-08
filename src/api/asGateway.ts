@@ -15,10 +15,10 @@ function getManager(): WsManager {
   if (!_wsManager) {
     _wsManager = new WsManager({
       url: appConfig.asWsUrl,
-      onStatusChange: status => {
+      onStatusChange: (status) => {
         console.log('[asGateway] WS 状态:', status);
       },
-      onError: event => {
+      onError: (event) => {
         console.error('[asGateway] WS 错误:', event);
       },
     });

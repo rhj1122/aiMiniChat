@@ -101,7 +101,7 @@ export function useChat() {
 
       sendMessage(wsMessage);
     },
-    [addMessage, updateMessage]
+    [addMessage, updateMessage],
   );
 
   return { send };

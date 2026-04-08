@@ -59,17 +59,17 @@ interface ChatStore {
   clearMessages: () => void;
 }
 
-export const useChatStore = create<ChatStore>()(set => ({
+export const useChatStore = create<ChatStore>()((set) => ({
   messages: [],
 
-  addMessage: message =>
-    set(state => ({
+  addMessage: (message) =>
+    set((state) => ({
       messages: [...state.messages, message],
     })),
 
   updateMessage: (qaId, messageId, fields) =>
-    set(state => ({
-      messages: state.messages.map(msg => {
+    set((state) => ({
+      messages: state.messages.map((msg) => {
         if (msg.qaId !== qaId) return msg;
 
         // 匹配 question
@@ -78,7 +78,7 @@ export const useChatStore = create<ChatStore>()(set => ({
             ...msg,
             question: applyFields(
               msg.question as unknown as AnyRecord,
-              fields
+              fields,
             ) as unknown as typeof msg.question,
           };
         }
@@ -86,7 +86,7 @@ export const useChatStore = create<ChatStore>()(set => ({
         // 匹配 answers 中的某一项
         return {
           ...msg,
-          answers: msg.answers.map(answer => {
+          answers: msg.answers.map((answer) => {
             if (answer.messageId !== messageId) return answer;
             return applyFields(answer as unknown as AnyRecord, fields) as unknown as typeof answer;
           }),

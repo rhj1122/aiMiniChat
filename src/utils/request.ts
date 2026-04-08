@@ -19,7 +19,7 @@ const instance: AxiosInstance = axios.create({
 // ─── 请求拦截器 ──────────────────────────────────────────────
 
 instance.interceptors.request.use(
-  config => {
+  (config) => {
     // TODO: 后期替换为登录获取的真实 token
     const token = 'temp-token-placeholder';
 
@@ -30,7 +30,7 @@ instance.interceptors.request.use(
 
     return config;
   },
-  error => Promise.reject(error)
+  (error) => Promise.reject(error),
 );
 
 // ─── 响应拦截器 ──────────────────────────────────────────────
@@ -39,7 +39,7 @@ instance.interceptors.response.use(
   (response: AxiosResponse) => {
     return response.data;
   },
-  error => {
+  (error) => {
     // 统一错误处理
     const status = error.response?.status;
     const message = error.response?.data?.message || error.message || '请求失败';
@@ -51,14 +51,14 @@ instance.interceptors.response.use(
     }
 
     return Promise.reject(new Error(message));
-  }
+  },
 );
 
 // ─── 请求方法封装 ─────────────────────────────────────────────
 
 export function get<T = unknown>(
   url: string,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<ApiResponse<T>> {
   return instance.get(url, config);
 }
@@ -66,7 +66,7 @@ export function get<T = unknown>(
 export function post<T = unknown>(
   url: string,
   data?: unknown,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<ApiResponse<T>> {
   return instance.post(url, data, config);
 }
@@ -74,14 +74,14 @@ export function post<T = unknown>(
 export function put<T = unknown>(
   url: string,
   data?: unknown,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<ApiResponse<T>> {
   return instance.put(url, data, config);
 }
 
 export function del<T = unknown>(
   url: string,
-  config?: AxiosRequestConfig
+  config?: AxiosRequestConfig,
 ): Promise<ApiResponse<T>> {
   return instance.delete(url, config);
 }

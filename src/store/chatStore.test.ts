@@ -14,10 +14,10 @@ function createMockMessage(qaId: string, questionId: string, answerIds: string[]
       moduleType: 'main',
       content: `问题-${qaId}`,
       attachments: [],
-      requestIdList: answerIds.map(id => `req-${id}`),
+      requestIdList: answerIds.map((id) => `req-${id}`),
       ext: {},
     },
-    answers: answerIds.map(id => ({
+    answers: answerIds.map((id) => ({
       messageId: id,
       createTime: Date.now(),
       sessionId: 'session-1',
@@ -43,13 +43,13 @@ function seedMessages() {
 
 // 按 qaId + messageId 查找 answer 的辅助函数
 function findAnswer(qaId: string, messageId: string) {
-  const msg = useChatStore.getState().messages.find(m => m.qaId === qaId);
-  return msg?.answers.find(a => a.messageId === messageId);
+  const msg = useChatStore.getState().messages.find((m) => m.qaId === qaId);
+  return msg?.answers.find((a) => a.messageId === messageId);
 }
 
 // 按 qaId 查找 question 的辅助函数
 function findQuestion(qaId: string) {
-  return useChatStore.getState().messages.find(m => m.qaId === qaId)?.question;
+  return useChatStore.getState().messages.find((m) => m.qaId === qaId)?.question;
 }
 
 describe('chatStore', () => {

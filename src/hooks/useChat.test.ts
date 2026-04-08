@@ -122,8 +122,8 @@ describe('useChat', () => {
 
     const answer = useChatStore
       .getState()
-      .messages.find(m => m.qaId === qaId)
-      ?.answers.find(a => a.messageId === answerMessageId);
+      .messages.find((m) => m.qaId === qaId)
+      ?.answers.find((a) => a.messageId === answerMessageId);
 
     expect(answer?.content).toBe('你好，我是 AI 助手');
   });
