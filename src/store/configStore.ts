@@ -10,9 +10,9 @@ interface ConfigStore {
   setConfig: (config: Record<string, unknown>) => void;
 }
 
-export const useConfigStore = create<ConfigStore>()(set => ({
+export const useConfigStore = create<ConfigStore>()((set) => ({
   config: null,
   isLoaded: false,
 
-  setConfig: config => set({ config, isLoaded: true }),
+  setConfig: (config) => set({ config, isLoaded: true }),
 }));

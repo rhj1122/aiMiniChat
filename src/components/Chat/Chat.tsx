@@ -7,7 +7,7 @@ import Question from './Question/Question';
 import Answer from './Answer/Answer';
 
 export default function Chat() {
-  const messages = useChatStore(state => state.messages);
+  const messages = useChatStore((state) => state.messages);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   // 新消息时自动滚动到底部
@@ -21,7 +21,7 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col">
-      {messages.map(item => (
+      {messages.map((item) => (
         <div key={item.qaId}>
           <Question question={item.question} />
           {item.answers[0] && <Answer answer={item.answers[0]} />}
