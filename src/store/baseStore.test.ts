@@ -32,7 +32,12 @@ describe('baseStore', () => {
   });
 
   test('setDeviceInfo 支持弹性扩展字段', () => {
-    const mockDevice = { deviceId: 'd001', deviceName: 'iPhone 15', deviceVersion: 'iOS 17', platform: 'mobile' };
+    const mockDevice = {
+      deviceId: 'd001',
+      deviceName: 'iPhone 15',
+      deviceVersion: 'iOS 17',
+      platform: 'mobile',
+    };
     useBaseStore.getState().setDeviceInfo(mockDevice);
     expect(useBaseStore.getState().deviceInfo).toEqual(mockDevice);
   });
@@ -44,7 +49,9 @@ describe('baseStore', () => {
   });
 
   test('clearDeviceInfo 应该将 deviceInfo 置为 null', () => {
-    useBaseStore.getState().setDeviceInfo({ deviceId: 'd002', deviceName: 'Pixel 8', deviceVersion: 'Android 14' });
+    useBaseStore
+      .getState()
+      .setDeviceInfo({ deviceId: 'd002', deviceName: 'Pixel 8', deviceVersion: 'Android 14' });
     useBaseStore.getState().clearDeviceInfo();
     expect(useBaseStore.getState().deviceInfo).toBeNull();
   });
