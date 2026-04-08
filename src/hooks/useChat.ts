@@ -7,6 +7,9 @@ import { useChatStore } from '@/store/chatStore';
 import { sendMessage, registerCallback, unregisterCallback } from '@/api/asGateway';
 import type { WsMessage } from '@/types';
 
+const string = '改一行代码验证针对pre-commit的format更新是否生效';
+console.log(string);
+
 // 固定的设备/应用信息（后续可从 config 或 store 读取）
 const DEVICE_INFO = {
   sn: '333333333322222222',

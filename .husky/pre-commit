@@ -1,3 +1,4 @@
 pnpm format
+git add -u
 pnpm check
 pnpm test:run
