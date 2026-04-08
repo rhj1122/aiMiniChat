@@ -13,12 +13,12 @@ interface BaseStore {
   clearDeviceInfo: () => void;
 }
 
-export const useBaseStore = create<BaseStore>()(set => ({
+export const useBaseStore = create<BaseStore>()((set) => ({
   userInfo: null,
   deviceInfo: null,
 
-  setUserInfo: userInfo => set({ userInfo }),
-  setDeviceInfo: deviceInfo => set({ deviceInfo }),
+  setUserInfo: (userInfo) => set({ userInfo }),
+  setDeviceInfo: (deviceInfo) => set({ deviceInfo }),
   clearUserInfo: () => set({ userInfo: null }),
   clearDeviceInfo: () => set({ deviceInfo: null }),
 }));
